@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
-import {TeamDetailComponent} from '../pages';
+import {TeamHomeComponent} from '../pages';
 
 
 @Component({
@@ -9,10 +9,27 @@ import {TeamDetailComponent} from '../pages';
 )
 export class TeamsComponent{
 
+     teams =[
+        {
+            Id:1,
+            Name : "Thunder"
+        },
+          {
+            Id:2,
+            Name : "Waves"
+        },
+          {
+            Id:3,
+            Name : "Lighting"
+        }
+
+    ]
     constructor(private navCtrl : NavController){
 
     }
-  itemTapped(){
-      this.navCtrl.push(TeamDetailComponent);
+  itemTapped($event,team){
+      console.log("team clicked " + team.Name);
+      
+      this.navCtrl.push(TeamHomeComponent,team);
   }
 }

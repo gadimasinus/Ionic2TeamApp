@@ -1,11 +1,16 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController,NavParams} from 'ionic-angular';
 
 @Component({
     templateUrl : 'team-detail.html'
 })
 export class TeamDetailComponent{
-    constructor(private navCtrl : NavController){
+    team : any;
+    constructor(private navCtrl : NavController,private params : NavParams){
+        console.log("params data " + params.data);
         
+        this.team = params.data;
     }
+
+
 }

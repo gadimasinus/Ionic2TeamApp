@@ -5,7 +5,6 @@
 </ion-header>    
 <ion-content>
    <ion-list>
-        <button ion-item (click)="itemTapped()">HC Elite</button>
-        <button ion-item (click)="itemTapped()">Team Takeover</button>
+        <button ion-item  *ngFor ="let team of teams" (click)="itemTapped($event,team)">{{team.Name}}</button>
     </ion-list> 
 </ion-content>    

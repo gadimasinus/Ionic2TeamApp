@@ -3,11 +3,12 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { MyTeamsComponent,TournamentsComponent,TeamsComponent,TeamDetailComponent } from '../pages/pages';
+import { MyTeamsComponent,TournamentsComponent,TeamsComponent,TeamDetailComponent,TeamHomeComponent,StandingComponent } from '../pages/pages';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {EliteApi} from './shared/shared';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyTeamsComponent,
     TournamentsComponent,
     TeamsComponent,
-    TeamDetailComponent
+    TeamDetailComponent,
+    TeamHomeComponent,
+    StandingComponent
   ],
   imports: [
     BrowserModule,
@@ -27,11 +30,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyTeamsComponent,
     TournamentsComponent,
     TeamsComponent,
-    TeamDetailComponent
+    TeamDetailComponent,
+    TeamHomeComponent,
+    StandingComponent
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    EliteApi,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
