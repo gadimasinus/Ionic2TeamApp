@@ -3,6 +3,7 @@
     </ion-navbar>    
 </ion-header>
 <ion-content>
-    <h2>Team Detail</h2>
-    <h3>{{team.Name}}</h3>
+  <ion-list>
+        <ion-item *ngFor="let game of games" (click)="gamesClicked($event,game)">{{game.opponent}}</ion-item>
+  </ion-list>      
 </ion-content>        

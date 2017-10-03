@@ -6,6 +6,6 @@ import {Component} from '@angular/core';
 export class StandingComponent{
 
     constructor() {
-
+  console.log('in standing page');
     }
 }

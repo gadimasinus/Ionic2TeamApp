@@ -1,9 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
+
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { MyTeamsComponent,TournamentsComponent,TeamsComponent,TeamDetailComponent,TeamHomeComponent,StandingComponent } from '../pages/pages';
+import {GamesComponent, MyTeamsComponent,TournamentsComponent,TeamsComponent,TeamDetailComponent,TeamHomeComponent,StandingComponent } from '../pages/pages';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -18,10 +20,12 @@ import {EliteApi} from './shared/shared';
     TeamsComponent,
     TeamDetailComponent,
     TeamHomeComponent,
-    StandingComponent
+    StandingComponent,
+    GamesComponent
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
@@ -32,7 +36,8 @@ import {EliteApi} from './shared/shared';
     TeamsComponent,
     TeamDetailComponent,
     TeamHomeComponent,
-    StandingComponent
+    StandingComponent,
+    GamesComponent
   ],
   providers: [
     StatusBar,
