@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
-import {TournamentsComponent} from '../pages';
+import {TournamentsComponent,TeamHomeComponent} from '../pages';
+import {EliteApi} from '../../app/shared/shared';
+
 
 @Component({
-    templateUrl : 'my-teams.html'
+    templateUrl : 'my-teams.html',
 })
 export class MyTeamsComponent{
 
@@ -13,15 +15,22 @@ export class MyTeamsComponent{
         tournamentName : 'March Madness Tournament'
     },
     {
-        team : {id : 6183, name: 'HC Elite', coach : 'Michelotti'},
-        tournamentId : '1112',
+        team : {id : 805, name: 'HC Elite', coach : 'Michelotti'},
+        tournamentId : '46ebd526-8839-476a-9ba0-8a9b2c07f3c3',
         tournamentName : 'Holiday Madness Tournament'
     }
     ];
-    constructor(private nav : NavController){
+    constructor(private nav : NavController, private eliteApi :EliteApi){
 
     }
     goToTournament(){
         this.nav.push(TournamentsComponent);
+    }
+    teamTapped(item)
+    {
+        console.log("team tapped " + item.team.name);
+        this.eliteApi.getTournamentData(item.team.tournamentId)
+            .subscribe(t=>this.nav.push(TeamHomeComponent,item.team));
+        ;
     }
 }

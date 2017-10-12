@@ -11,6 +11,7 @@ export class TeamDetailComponent{
     team : any ={};
     games : any[];
     private tourData : any;
+    teamStanding : any;
     constructor(private navCtrl : NavController,private params : NavParams, private eliateApi : EliteApi){
     //    console.log('in team details page');
         
@@ -20,7 +21,10 @@ export class TeamDetailComponent{
     }
 
     ionViewDidLoad(){
+        
+        
         this.team = this.params.data;
+        console.log('in team detail' + this.team.name);
         this.tourData = this.eliateApi.getCurrentTournament();
         this.games = _.chain(this.tourData.games)
                   .filter(g => g.team1Id === this.team.id || g.team2Id === this.team.id)
@@ -39,6 +43,7 @@ export class TeamDetailComponent{
                       };
                   })
                   .value();
+        this.teamStanding = _.find(this.tourData.standings,{ "teamId" : this.team.id});
 
     }
 

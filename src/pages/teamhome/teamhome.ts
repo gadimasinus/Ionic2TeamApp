@@ -10,8 +10,8 @@ export class TeamHomeComponent{
     teamDetailTab = TeamDetailComponent;
     standingTab = StandingComponent;
     constructor(private navCtrl : NavController, private params : NavParams ) {
-     //   console.log(params.data);
-      //  console.log('in team home');
+        console.log(params.data);
+        console.log('in team home' + params.data.name);
         
         
         
