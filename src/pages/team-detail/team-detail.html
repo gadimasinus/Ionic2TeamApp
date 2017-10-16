@@ -12,12 +12,18 @@
         </ion-col>
 
       </ion-row>
-       </ion-card-content>
+      <ion-item>
+        <ion-label>Date Filter : </ion-label>
+        <ion-toggle [(ngModel)]="useDateFilter" (ionChange)="dateFlipped()"></ion-toggle>
+        <ion-datetime displatFormat="M/D/YYYY" pickerFormat="M/D/YYYY" (ionChange)="dateFlipped()" [(ngModel)]="dateFilter" [(disabled)]="!useDateFilter">
+        </ion-datetime>
+      </ion-item>
+    </ion-card-content>
   </ion-card>
- 
 
 
-  <ion-list>
+
+  <ion-list *ngIf="games">
     <ion-item *ngFor="let game of games" (click)="gamesClicked($event,game)">{{game.opponent}}
       <ion-row>
         <ion-col>
@@ -32,8 +38,8 @@
 
         <ion-col>
           <h4>{{game.scoreDisplay}}</h4>
+          <ion-badge>{{getScoreWorL(game)}}</ion-badge>
         </ion-col>
-
       </ion-row>
     </ion-item>
   </ion-list>
