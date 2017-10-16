@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import * as _ from 'lodash';
 import { EliteApi } from '../../app/shared/shared';
 import { GamesComponent } from '../pages';
@@ -16,17 +16,18 @@ export class TeamDetailComponent {
     private tourData: any;
     teamStanding: any;
     useDateFilter: boolean;
-    constructor(private navCtrl: NavController, private params: NavParams, private eliateApi: EliteApi) {
+    isFollowing : boolean;
+    constructor(private navCtrl: NavController, private params: NavParams, 
+        private eliateApi: EliteApi, private alertController : AlertController,
+        private toastController : ToastController) {
         //    console.log('in team details page');
 
         //   console.log("params data " + params.data);
 
 
     }
-
+    ////TS_IGNORE
     ionViewDidLoad() {
-
-
         this.team = this.params.data;
         console.log('in team detail' + this.team.name);
         this.tourData = this.eliateApi.getCurrentTournament();
@@ -88,7 +89,39 @@ export class TeamDetailComponent {
     }
 
     getBadgeClassByGame(game) {
-        console.log('in badge class');
-        return game.scoreDisplay.indexOf('W:') === 0 ? 'badge-primary' : 'badge-danger';
+        return game.scoreDisplay.indexOf('W:') === 0 ? 'primary' : 'danger';
+    }
+
+    toggleFollow(){
+        if(this.isFollowing){
+            let confirm = this.alertController.create({
+                title : 'unfollow?',
+                message : 'Are you sure you want to unfollow?',
+                buttons : [{
+                    text : 'Yes',
+                    handler : () => {
+                     this.isFollowing =false;
+                     let toast = this.toastController.create({
+                        message : 'You have unfollowed this team.',
+                        duration : 2000,
+                        position : 'bottom'
+                     });
+                    
+                    toast.present();
+
+                    }
+                },
+                {
+                    text : 'No',
+                }]
+            });
+
+            confirm.present();
+            
+        }
+        else
+        {
+          this.isFollowing = true;    
+        }
     }
 }
