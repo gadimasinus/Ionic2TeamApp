@@ -7,10 +7,11 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import {GamesComponent, MyTeamsComponent,TournamentsComponent,TeamsComponent,TeamDetailComponent,TeamHomeComponent,StandingComponent } from '../pages/pages';
 
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import {EliteApi} from './shared/shared';
+import {EliteApi, UserSettings} from './shared/shared';
+import {IonicStorageModule} from '@ionic/storage';
+
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {EliteApi} from './shared/shared';
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -43,6 +45,7 @@ import {EliteApi} from './shared/shared';
     StatusBar,
     SplashScreen,
     EliteApi,
+    UserSettings,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

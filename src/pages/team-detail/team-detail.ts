@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import * as _ from 'lodash';
-import { EliteApi } from '../../app/shared/shared';
+import { EliteApi, UserSettings } from '../../app/shared/shared';
 import { GamesComponent } from '../pages';
 import * as moment from 'moment';
 
@@ -16,15 +16,10 @@ export class TeamDetailComponent {
     private tourData: any;
     teamStanding: any;
     useDateFilter: boolean;
-    isFollowing : boolean;
-    constructor(private navCtrl: NavController, private params: NavParams, 
-        private eliateApi: EliteApi, private alertController : AlertController,
-        private toastController : ToastController) {
-        //    console.log('in team details page');
-
-        //   console.log("params data " + params.data);
-
-
+    isFollowing: boolean;
+    constructor(private navCtrl: NavController, private params: NavParams,
+        private eliateApi: EliteApi, private alertController: AlertController,
+        private toastController: ToastController, private userSettings: UserSettings) {
     }
     ////TS_IGNORE
     ionViewDidLoad() {
@@ -50,6 +45,7 @@ export class TeamDetailComponent {
             .value();
         this.allgames = this.games;
         this.teamStanding = _.find(this.tourData.standings, { "teamId": this.team.id });
+        this.userSettings.isFollowing(this.team).then(value => this.isFollowing = value);
 
     }
 
@@ -84,6 +80,7 @@ export class TeamDetailComponent {
         }
 
     }
+
     getScoreWorL(game) {
         return game.scoreDisplay ? game.scoreDisplay[0] : '';
     }
@@ -92,36 +89,40 @@ export class TeamDetailComponent {
         return game.scoreDisplay.indexOf('W:') === 0 ? 'primary' : 'danger';
     }
 
-    toggleFollow(){
-        if(this.isFollowing){
+    toggleFollow() {
+        if (this.isFollowing) {
             let confirm = this.alertController.create({
-                title : 'unfollow?',
-                message : 'Are you sure you want to unfollow?',
-                buttons : [{
-                    text : 'Yes',
-                    handler : () => {
-                     this.isFollowing =false;
-                     let toast = this.toastController.create({
-                        message : 'You have unfollowed this team.',
-                        duration : 2000,
-                        position : 'bottom'
-                     });
-                    
-                    toast.present();
+                title: 'unfollow?',
+                message: 'Are you sure you want to unfollow?',
+                buttons: [{
+                    text: 'Yes',
+                    handler: () => {
+                        this.isFollowing = false;
+
+                        this.userSettings.unfollowTeam(this.team);
+
+                        let toast = this.toastController.create({
+                            message: 'You have unfollowed this team.',
+                            duration: 2000,
+                            position: 'bottom'
+                        });
+
+                        toast.present();
 
                     }
                 },
                 {
-                    text : 'No',
+                    text: 'No',
                 }]
             });
 
             confirm.present();
-            
+
         }
-        else
-        {
-          this.isFollowing = true;    
+        else {
+            this.isFollowing = true;
+            this.userSettings.followTeam(this.team, this.tourData.tournament.id,
+                this.tourData.tournament.name);
         }
     }
 }
