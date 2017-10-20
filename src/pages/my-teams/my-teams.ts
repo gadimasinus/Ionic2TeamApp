@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
 import { TournamentsComponent, TeamHomeComponent } from '../pages';
 import { EliteApi, UserSettings } from '../../app/shared/shared';
 
@@ -23,8 +23,8 @@ export class MyTeamsComponent {
      }
      ];*/
     constructor(private nav: NavController, private eliteApi: EliteApi,
-        private userSettings: UserSettings) {
-
+        private userSettings: UserSettings, private events: Events) {
+        this.events.subscribe('followed:changed', () => this.handleEvents());
     }
     goToTournament() {
         this.nav.push(TournamentsComponent);
@@ -40,17 +40,17 @@ export class MyTeamsComponent {
         console.log("in view did enter");
         this.userSettings.getAllFollowed().subscribe(
             data => {
-                console.log(data[0].team.name);
                 this.favorites = data;
-                console.log(this.favorites[0].team.name);
-
-                //console.log(JSON.parse(data));
             }
-
         );
-
-        //   this.favorites = this.userSettings.getAllFollowed();
-        //   console.log("all followed " + this.favorites);
+    }
+    handleEvents() {
+        console.log('received event in my teams');
+        this.userSettings.getAllFollowed().subscribe(
+            data => {
+                this.favorites = data;
+            }
+        );
 
     }
 }

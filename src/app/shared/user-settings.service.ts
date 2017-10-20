@@ -37,7 +37,7 @@ export class UserSettings {
         return this.storage.get(team.id.toString()).then(value => value ? true : false);
     }
 
-    getAllFollowed(): Observable<any[]> {
+    /*getAllFollowed(): Observable<any[]> {
 
         let items = [];
         return Observable.fromPromise(
@@ -51,5 +51,22 @@ export class UserSettings {
         // console.log('length is ' + items.length);
 
         // return items.length ? items : null;
+    }*/
+
+    getAllFollowed(): Observable<any[]> {
+        var promise = new Promise(resolve => {
+            let results = [];
+            this.storage.forEach(data => {
+             // console.log('***inside foreach', data);
+                results.push(JSON.parse(data));
+            });
+            return resolve(results);
+        });
+
+        return  Observable.fromPromise(promise);
+        // console.log('length is ' + items.length);
+
+        // return items.length ? items : null;
     }
+
 }
