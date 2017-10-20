@@ -64,8 +64,9 @@ export class TeamDetailComponent {
     gamesClicked($event, game) {
         console.log('in games clicked');
 
+        console.log('incoming game is ' + game);
         let sourceGame = this.tourData.games.find(g => g.id === game.gameId);
-        console.log('source game is ' + sourceGame.opponentName);
+        console.log('source game is ' + sourceGame);
 
         this.navCtrl.parent.parent.push(GamesComponent, sourceGame);
 
@@ -126,10 +127,10 @@ export class TeamDetailComponent {
         }
     }
 
-    refreshAll(refresher){
-        this.eliateApi.refreshTournament().subscribe(()=>{
+    refreshAll(refresher) {
+        this.eliateApi.refreshTournament().subscribe(() => {
             console.log('getting refresh data');
-            
+
             refresher.complete()
             this.ionViewDidLoad();
         }

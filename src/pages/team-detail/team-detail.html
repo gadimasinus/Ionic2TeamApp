@@ -5,8 +5,8 @@
 <ion-content>
   <ion-refresher (ionRefresh)="refreshAll($event)">
     <ion-refresher-content>
-    </ion-refresher-content>  
-  </ion-refresher>  
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-card *ngIf="teamStanding">
     <ion-card-content>
       <ion-row>
@@ -15,11 +15,11 @@
           <p>Coach : {{team.coach}}</p>
         </ion-col>
         <ion-col width-50 text-right>
-          <button ion-button outline (click)="toggleFollow()" *ngIf="!isFollowing" >Add Favorite</button>
+          <button ion-button outline (click)="toggleFollow()" *ngIf="!isFollowing">Add Favorite</button>
           <button ion-button (click)="toggleFollow()" *ngIf="isFollowing">
             <ion-icon name="star"></ion-icon>
           </button>
-        </ion-col>  
+        </ion-col>
 
       </ion-row>
       <ion-item>
@@ -30,8 +30,8 @@
       </ion-item>
     </ion-card-content>
   </ion-card>
-  <ion-list *ngIf="games">
-    <ion-item *ngFor="let game of games" (click)="gamesClicked($event,game)">{{game.opponent}}
+  <ion-list>
+    <ion-item *ngFor="let game of games" (click)="gamesClicked($event, game)">{{game.opponent}}
       <ion-row>
         <ion-col>
           <p>{{game.time | date :'M/d/yy'}}</p>

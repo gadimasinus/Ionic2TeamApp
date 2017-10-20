@@ -88,3 +88,11 @@ $colors: (
 @import "noto-sans";
 
 @import "../pages/my-teams/my-teams";
+@import "../pages/games/games";
+@import "../pages/map/map";
+
+$colors :(
+  primary : #003300,
+  secondary : #f0b840,
+);
+
