@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import * as _ from 'lodash';
+import { Events } from 'ionic-angular';
+import 'rxjs/add/observable/fromPromise';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UserSettings {
 
-   // storage = new Storage(LocalStorage);
-    constructor(private storage : Storage) {
+    constructor(private storage: Storage, private events: Events) {
 
     }
 
@@ -19,7 +21,8 @@ export class UserSettings {
         };
         console.log('following team ' + team.id);
         this.storage.set(team.id.toString(), JSON.stringify(item));
-        console.log(this.storage);
+        this.events.publish("followed:changed");
+        //console.log(this.storage);
 
     }
 
@@ -27,26 +30,26 @@ export class UserSettings {
         console.log('unfollowing team ' + team.id);
 
         this.storage.remove(team.id.toString());
+        this.events.publish("followed:changed");
     }
 
     isFollowing(team) {
         return this.storage.get(team.id.toString()).then(value => value ? true : false);
     }
 
-    getAllFollowed() {
+    getAllFollowed(): Observable<any[]> {
+
         let items = [];
-        console.log("in getAllFollowed");
-        console.log(this.storage);
+        return Observable.fromPromise(
+            this.storage.forEach(data => {
+                items.push(JSON.parse(data));
+                console.log('data is ' + data);
+                return items;
+            }
+            )
+        );
+        // console.log('length is ' + items.length);
 
-        this.storage.forEach(data=>{
-            console.log(JSON.parse(data));
-            
-            items.push(JSON.parse(data));
-        })
-
-       
-        console.log('length is ' + items.length);
-        
-        return items.length ? items : null;
+        // return items.length ? items : null;
     }
 }

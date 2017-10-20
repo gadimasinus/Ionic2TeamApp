@@ -38,12 +38,19 @@ export class MyTeamsComponent {
 
     ionViewDidEnter() {
         console.log("in view did enter");
+        this.userSettings.getAllFollowed().subscribe(
+            data => {
+                console.log(data[0].team.name);
+                this.favorites = data;
+                console.log(this.favorites[0].team.name);
 
-         this.favorites = this.userSettings.getAllFollowed();
-         setTimeout(function() {
-           
-        }, 2000);
-        console.log("all followed " + this.favorites);
+                //console.log(JSON.parse(data));
+            }
+
+        );
+
+        //   this.favorites = this.userSettings.getAllFollowed();
+        //   console.log("all followed " + this.favorites);
 
     }
 }

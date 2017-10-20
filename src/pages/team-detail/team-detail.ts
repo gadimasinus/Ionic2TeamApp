@@ -125,4 +125,14 @@ export class TeamDetailComponent {
                 this.tourData.tournament.name);
         }
     }
+
+    refreshAll(refresher){
+        this.eliateApi.refreshTournament().subscribe(()=>{
+            console.log('getting refresh data');
+            
+            refresher.complete()
+            this.ionViewDidLoad();
+        }
+        );
+    }
 }
